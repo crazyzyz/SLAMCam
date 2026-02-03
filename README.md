@@ -19,13 +19,6 @@ If you use SLAMCam for your research consider citing these papers:
 - Faizullin, M.; Kornilova, A.; Akhmetyanov, A.; Ferrer, G. [Twist-n-Sync: Software Clock Synchronization with
   Microseconds Accuracy Using MEMS-Gyroscopes](https://doi.org/10.3390/s21010068). Sensors 2021, 21, 68
 
-## Install
-
-Get SLAMCam on F-Droid or install the latest APK from GitHub Releases.
-
-[<img src="https://fdroid.gitlab.io/artwork/badge/get-it-on.png"
-alt="Get it on F-Droid"
-height="80">](https://f-droid.org/packages/com.opencamera_sensors.app/)
 
 ## Usage
 
@@ -110,20 +103,3 @@ _Note: the phase needs to be re-aligned before every recording._
 - To minimize the amount of preprocessing done by the smartphone, we also disable **video
   stabilization** and **OIS** options.
 
-## Contribution
-
-The project follows [AOSP Java Code Style](https://source.android.com/setup/contribute/code-style),
-main principles, which include the following:
-
-- Non-public fields should start with ```m```, constants are ```ALL_CAPS_UNDERSCORES```
-- Standard brace style:
-
-```java
-if () {
-    // ...
-} else {
-    // ...
-}
-```
-
-- Limit line length
