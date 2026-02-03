@@ -1,8 +1,11 @@
+
+---
+
 # SLAMCam
 
-Due to recent research on VPS and SLAM, a recorder was needed for IMU, GPS, and video stream data, including support for Chinese.
-
-This project is a secondary development based on **OpenCamera**, with added support for synchronized recording of **IMU, GPS, and video streams**.
+SLAMCam is a secondary development based on **OpenCamera**, designed to support **synchronized recording of IMU, GPS, and video streams**.
+All sensor data are aligned on a **unified timeline**, making it suitable for **SLAM** and **Visual-Inertial Odometry (VIO)** research.
+The software also supports a **Chinese (Simplified) user interface**.
 
 <p align="center">
   <img src="PNG/1.jpg" width="30%" />
@@ -10,96 +13,93 @@ This project is a secondary development based on **OpenCamera**, with added supp
   <img src="PNG/3.jpg" width="30%" />
 </p>
 
-## Related papers
+---
 
-If you use SLAMCam for your research consider citing these papers:
+## Features
 
-- A. Akhmetyanov, A. Kornilova, M. Faizullin, D. Pozo and G. Ferrer, ["Sub-millisecond Video Synchronization of Multiple
-  Android Smartphones,"](https://doi.org/10.1109/SENSORS47087.2021.9639782) 2021 IEEE Sensors, 2021, pp. 1-4
-- Faizullin, M.; Kornilova, A.; Akhmetyanov, A.; Ferrer, G. [Twist-n-Sync: Software Clock Synchronization with
-  Microseconds Accuracy Using MEMS-Gyroscopes](https://doi.org/10.3390/s21010068). Sensors 2021, 21, 68
+* Synchronized IMU, GPS, and video recording
+* Real-time timestamping for sensor data
+* Remote control and multi-device synchronization (RecSync)
+* Chinese (Simplified) UI support
 
+---
+
+## Requirements
+
+* Android device with **full Camera2 API support**
+* Optional: Wi-Fi connection for remote recording or multi-device sync
+
+---
 
 ## Usage
 
-Our app requires full Camera2 API support. Additional restrictions are described in the sections
-below as needed.
+### 1. IMU Recording
 
-### IMU recording
+> **Note:** Synchronized timestamps for camera and IMU are not supported on all devices. Check support in preferences.
 
-**Important**: synchronized timestamping for camera and IMU data isn’t available on all the
-devices with Camera2 API support. You can check whether your device supports this feature in
-preferences.
+Steps:
 
+1. Open **Preferences** → enable **Camera2 API** → enable **"Sync video IMU recording"** in IMU settings.
+2. (Optional) Disable **video stabilization** to minimize preprocessing effects.
+3. (Optional) Enable **save frames** to verify recorded data.
+4. (Optional) Enable **flash strobe** and set frequency in additional sensor settings.
+5. Switch to **video mode**, adjust ISO and exposure as needed.
+6. **Record video**.
+7. Retrieve recorded data from `DCIM/SLAMCam/{VIDEO_DATE}/`:
 
-- Go to preferences, enable Camera2 API and press the **“Enable sync video IMU recording”** switch
-  in "IMU settings..."
-- (Optional) **Disable video stabilization** in video preferences of SLAMCam to minimize
-  preprocessing effects
-- (Optional) Enable **save frames** option if you want to verify recorded data correctness
-- (Optional) Enable **flash strobe** and specify its frequency in additional sensor settings
-- **Switch to video**, setup ISO and exposure time
-- **Record video**
-- **Get data** from ```DCIM/SLAMCam```:
-    - Video file
-    - Sensor data and frame timestamps in the directory ```{VIDEO_DATE}```:
-        - ```{VIDEO_NAME}_gyro.csv```, data format: ```X-data, Y-data, Z-data, timestamp (ns)```
-        - ```{VIDEO_NAME}_accel.csv```, data format: ```X-data, Y-data, Z-data, timestamp (ns)```
-        - ```{VIDEO_NAME}_magnetic.csv```, data format: ```X-data, Y-data, Z-data, timestamp (ns)```
-        - ```{VIDEO_NAME}_timestamps.csv```, data format: ```timestamp (ns)```
-        - ```{VIDEO_NAME}_flash.csv```, data format: ```timestamp (ns)``` (timestamps of when the
-          flash fired)
+   * `{VIDEO_NAME}_gyro.csv` – `X, Y, Z, timestamp (ns)`
+   * `{VIDEO_NAME}_accel.csv` – `X, Y, Z, timestamp (ns)`
+   * `{VIDEO_NAME}_magnetic.csv` – `X, Y, Z, timestamp (ns)`
+   * `{VIDEO_NAME}_timestamps.csv` – `timestamp (ns)`
+   * `{VIDEO_NAME}_flash.csv` – `timestamp (ns)` (flash firing timestamps)
 
-### Remote recording
+---
 
-- **Connect** smartphone to the same network as PC
-- Use scripts provided in ```./api_client/``` directory to **send requests** for the application.
-    - *Note: phase, which is returned by* ```start_recording``` *method, can be used to perform
-      synchronization with external devices*
-      ![remote control methods](https://www.websequencediagrams.com/files/render?link=6txhpHrdgaebT4DYz2C3SaEQjHM1esYDkJZJvPZcgCJHbRAg3c8hqcJYgOmGirze)
+### 2. Remote Recording
 
-### Synchronized recording on multiple smartphones (RecSync)
+Steps:
 
-**Important**: smartphones are required to support real-time timestamping to be correctly
-synchronized. This can be checked on the preview message when RecSync is enabled ("Timestamp source"
-should be "realtime").
-![screenshot timestamp source](https://imgur.com/vQHufyV.png)
+1. Connect your smartphone and PC to the **same network**.
+2. Use scripts in `./api_client/` to send requests to SLAMCam.
 
-**Leader smartphone setup:**
+   * The `phase` returned by `start_recording` can be used for synchronization with external devices.
+     ![remote control methods](https://www.websequencediagrams.com/files/render?link=6txhpHrdgaebT4DYz2C3SaEQjHM1esYDkJZJvPZcgCJHbRAg3c8hqcJYgOmGirze)
 
-- Start a **Wi-Fi hotspot**
-- Open SLAMCam, go to preferences - "RecSync settings..." and enable the **"Use
-  RecSync"** switch
-- (Optional) Enable **phase alignment** option if synchronization precision better than half of a
-  frame duration is required
-- (Optional) Choose which camera settings will be broadcasted to client smartphones in the **"Sync
-  settings"** section
-- Switch to video, adjust the camera settings as needed and press the **settings synchronization
-  button**
-- Wait for client smartphones to connect if needed
-- (Optional) If phase alignment was enabled, press the **phase alignment button** to start the
-  alignment and wait for it to finish ("Phase error" on the preview indicates how much the current
-  phase differs from the targeted one -- when it becomes green, the phase is considered aligned)
-- **Start a video recording**
+---
 
-![screenshot_recsync_buttons](https://i.imgur.com/iQS8zpc.png)
+### 3. Multi-Device Synchronized Recording (RecSync)
 
-**Client smartphones setup:**
+> **Important:** Devices must support real-time timestamping. Check "Timestamp source" in RecSync preview (should display "realtime").
+> Leader device manages timing; client devices follow the leader.
 
-- **Connect** to the leader's Wi-Fi hotspot
-- Open SLAMCam, go to preferences - "RecSync settings..." and enable the **"Use
-  RecSync"** switch
-- Adjust the camera settings as needed (the ones that will not be broadcast by the leader) and wait
-  for the leader to start the recording
+#### Leader Device Setup
 
-_Note: the phase needs to be re-aligned before every recording._
+1. Start a **Wi-Fi hotspot**.
+2. Open SLAMCam → Preferences → **RecSync settings** → enable **"Use RecSync"**.
+3. (Optional) Enable **phase alignment** for higher synchronization precision (< half frame).
+4. (Optional) Configure **camera settings broadcast** in "Sync settings".
+5. Switch to **video mode**, adjust camera settings, and press **settings synchronization**.
+6. Wait for clients to connect.
+7. (If phase alignment enabled) Press **phase alignment button**; wait until "Phase error" turns green.
+8. **Start recording**.
 
-## Good practices for data recording
+#### Client Device Setup
 
-- When recording video with audio recording enabled, MediaRecorder adds extra frames to the video to
-  match the sound. Due to this problem, the **audio recording** feature **is disabled** in our app
-  by default.
+1. Connect to the leader's **Wi-Fi hotspot**.
+2. Open SLAMCam → Preferences → **RecSync settings** → enable **"Use RecSync"**.
+3. Adjust camera settings not broadcasted by leader.
+4. Wait for leader to start recording.
 
-- To minimize the amount of preprocessing done by the smartphone, we also disable **video
-  stabilization** and **OIS** options.
+> *Phase alignment must be performed before every recording session.*
+
+![screenshot\_recsync\_buttons](https://i.imgur.com/iQS8zpc.png)
+
+---
+
+## Best Practices
+
+* **Audio recording is disabled** to avoid extra frames caused by MediaRecorder audio-sync issues.
+* Disable **video stabilization** and **OIS** to reduce preprocessing and improve data consistency.
+
+---
 
