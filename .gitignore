@@ -1,0 +1,64 @@
+# Android
+*.iml
+.gradle/
+.idea/
+.navigation/
+local.properties
+/build/
+app/build/
+.externalNativeBuild/
+.cxx/
+
+# Python (for api_client)
+__pycache__/
+*.py[cod]
+*.venv
+.venv/
+env/
+
+# OS
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# Secrets
+*.jks
+*.keystore
+*.p12
+*.gpg
+*.key
+google-services.json
+opencamera-extended-firebase-adminsdk*.json
+
+# Build Outputs
+*.apk
+*.aab
+*.ap_
+*.dex
+*.class
+
+# Project Specific
+_archive/
+_devdocs/
+_other/
+_saved/
+testdata/
+gfx/
+*.db
+*.csv
+*.mp4
+*.log
+uninstall.bat
+
+# Java/archives
+*.war
+*.ear
+*.zip
+*.tar.gz
+*.rar
+
+# Temp
+.mtj.tmp/
+*.tmp
+*.bak
+*.swp
