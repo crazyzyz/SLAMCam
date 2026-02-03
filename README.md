@@ -2,7 +2,7 @@
 
 Due to recent research on VPS and SLAM, a recorder was needed for IMU, GPS, and video stream data, including support for Chinese.
 
-This project is a secondary development based on OpenCamera, now supporting synchronized **IMU, GPS, and video stream** information.
+This project is a secondary development based on **OpenCamera**, with added support for synchronized recording of **IMU, GPS, and video streams**.
 
 <p align="center">
   <img src="PNG/1.jpg" width="30%" />
