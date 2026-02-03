@@ -1,16 +1,14 @@
-![SLAMCam logo](https://imgur.com/7qjCtgp.png)
+# SLAMCam
 
-**Note**: this is the main repository of SLAMCam. The old repository is now archived and
-will not receive any updates.
+Due to recent research on VPS and SLAM, a recorder was needed for IMU, GPS, and video stream data, including support for Chinese.
 
-SLAMCam is an Android application for synchronized recording of video and IMU data on one
-or multiple smartphones. It records sensor data (accelerometer, gyroscope, magnetometer) and video
-with frame timestamps synced to the same clock.
+This project is a secondary development based on OpenCamera, now supporting synchronized **IMU, GPS, and video stream** information.
 
-This project is based on [Open Camera](https://opencamera.org.uk/) — a popular open-source camera
-application with flexibility in camera parameters settings, actively supported by the community. By
-regular merging of Open Camera updates our app will adapt to new smartphones and APIs — this is an
-advantage over the other video + IMU recording applications built from scratch for Camera2API.
+<p align="center">
+  <img src="PNG/1.jpg" width="30%" />
+  <img src="PNG/2.jpg" width="30%" />
+  <img src="PNG/3.jpg" width="30%" />
+</p>
 
 ## Related papers
 
@@ -40,7 +38,6 @@ below as needed.
 devices with Camera2 API support. You can check whether your device supports this feature in
 preferences.
 
-![screenshot settings](https://imgur.com/Md2O0sO.png)
 
 - Go to preferences, enable Camera2 API and press the **“Enable sync video IMU recording”** switch
   in "IMU settings..."
